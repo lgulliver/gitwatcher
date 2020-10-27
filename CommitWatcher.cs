@@ -18,19 +18,16 @@ namespace Azureish
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-
-            string name = req.Query["name"];
+            
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            log.LogInformation(requestBody);
-
-            name = name ?? data?.name;
-
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            var commitId = data.head_commit.id.ToString().Substring(0,8);
+            var author = data.head_commit.author.username;
+            var commitMessage = data.head_commit.message.ToString().Substring(0,20);
+                        
+            string responseMessage = $"{commitId} - {author} - {commitMessage}";
 
             return new OkObjectResult(responseMessage);
         }
