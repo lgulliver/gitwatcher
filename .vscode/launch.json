@@ -8,7 +8,7 @@
             "cwd": "${workspaceFolder}/client"
         },
         {
-            "name": "Function",
+            "name": "Attach to .NET Functions",
             "type": "coreclr",
             "request": "attach",
             "processId": "${command:azureFunctions.pickProcess}"
@@ -19,7 +19,7 @@
             "name": "Run it all",
             "configurations": [
                 "Blazor",
-                "Function"
+                "Attach to .NET Functions"
             ]
         }
     ]
