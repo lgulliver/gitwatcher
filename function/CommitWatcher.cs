@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 
 namespace Azureish
 {
@@ -31,5 +32,17 @@ namespace Azureish
 
             return new OkObjectResult(responseMessage);
         }
+
+        [FunctionName("negotiate")]
+        public static SignalRConnectionInfo GetSignalRInfo(
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest request,
+            ILogger log,
+            [SignalRConnectionInfo(HubName = "commitHub")] SignalRConnectionInfo connectionInfo)
+            {
+                log.LogInformation("Negotiating connection");
+
+                return connectionInfo;
+
+            }
     }
 }
