@@ -1,11 +1,13 @@
 {
     "version": "0.2.0",
     "configurations": [
+        
         {
             "name": "Blazor",
             "type": "blazorwasm",
             "request": "launch",
-            "cwd": "${workspaceFolder}/client"
+            "cwd": "${workspaceFolder}/client",
+            "browser": "edge"
         },
         {
             "name": "Attach to .NET Functions",

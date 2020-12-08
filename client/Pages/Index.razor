@@ -15,7 +15,10 @@
 
     protected override async Task OnInitializedAsync() 
     {
-        hubConnection = new HubConnectionBuilder().WithUrl(config["ApiBaseUrl"]).Build();
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(config["ApiBaseUrl"])
+            .WithAutomaticReconnect()
+            .Build();
 
         hubConnection.On<GitMessage>("gitMessage", (gitMessage) =>
         {

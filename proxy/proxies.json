@@ -8,7 +8,7 @@
                     "POST"
                 ]
             },
-            "backendUri": "%API_BASE_URL%/api/BeginNegotiate",
+            "backendUri": "%api_base_url%/api/BeginNegotiate",
             "requestOverrides": {
                 "backend.request.headers.x-functions-key": "%NEGOTIATE_FUNCTION_KEY%"
             }
@@ -20,7 +20,7 @@
                     "POST"
                 ]
             },
-            "backendUri": "%API_BASE_URL%/api/HandleCommitEvent",
+            "backendUri": "%api_base_url%/api/HandleCommitEvent",
             "requestOverrides": {
                 "backend.request.headers.x-functions-key": "%COMMITWATCHER_FUNCTION_KEY%"
             }
