@@ -43,7 +43,7 @@ namespace Azureish
         }
 
 
-        //DON'T MAKE THIS ANONYMOUS!!!!
+        //DON'T MAKE THIS ANONYMOUS!!
         [FunctionName("negotiate")]
         public static SignalRConnectionInfo GetSignalRInfo(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest request,
