@@ -4,7 +4,9 @@
 
 @inject Microsoft.Extensions.Configuration.IConfiguration config
 
-<h1>@commitMessage</h1>
+<div class="commit">
+    <strong>@repo</strong> - @commitMessage
+</div>
 
 
 
@@ -12,6 +14,7 @@
     private HubConnection hubConnection;    
 
     private string commitMessage = string.Empty;
+    private string repo = string.Empty;
 
     protected override async Task OnInitializedAsync() 
     {
@@ -33,5 +36,6 @@
 
     public class GitMessage {
         public string Message {get; set;}
+        public string Repository {get; set;}
     }
 }
