@@ -26,6 +26,8 @@
         hubConnection.On<GitMessage>("gitMessage", (gitMessage) =>
         {
             commitMessage = gitMessage.Message;
+            repo = gitMessage.Repository;
+            
             StateHasChanged();
         });
 
