@@ -13,7 +13,7 @@ namespace Azureish
 {
     public static class CommitWatcher
     {
-        [FunctionName("CommitWatcher")]
+        [FunctionName("HandleCommitEvent")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             [SignalR(HubName = "commitHub")] IAsyncCollector<SignalRMessage> signalRMessages,
@@ -44,7 +44,7 @@ namespace Azureish
 
 
         //DON'T MAKE THIS ANONYMOUS!!!!!!!!!!!
-        [FunctionName("negotiate")]
+        [FunctionName("BeginNegotiate")]
         public static SignalRConnectionInfo GetSignalRInfo(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest request,
             ILogger log,
