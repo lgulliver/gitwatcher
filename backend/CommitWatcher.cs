@@ -16,33 +16,46 @@ namespace Azureish
         [FunctionName("CommitWatcher")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [SignalR(HubName = "commitHub")] IAsyncCollector<SignalRMessage> signalRMessages,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-            
+
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            var commitId = data.head_commit.id.ToString().Substring(0,8);
+            var commitId = data.head_commit.id.ToString().Substring(0, 8);
             var author = data.head_commit.author.username;
-            var commitMessage = data.head_commit.message.ToString().Substring(0,20);
-                        
-            string responseMessage = $"{commitId} - {author} - {commitMessage}";
+            var commitMessage = data.head_commit.message.ToString().Substring(0, 20);
+
+            string responseMessage = $"{commitId} - {author} - {commitMessage}";            
+
+            await signalRMessages.AddAsync(
+                new SignalRMessage
+                {
+                    Target = "gitMessage",
+                    Arguments = new[] { new GitMessage { Message = responseMessage } }
+                }
+            );
 
             return new OkObjectResult(responseMessage);
         }
 
         [FunctionName("negotiate")]
         public static SignalRConnectionInfo GetSignalRInfo(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest request,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest request,
             ILogger log,
             [SignalRConnectionInfo(HubName = "commitHub")] SignalRConnectionInfo connectionInfo)
-            {
-                log.LogInformation("Negotiating connection");
+        {
+            log.LogInformation("Negotiating connection");
 
-                return connectionInfo;
+            return connectionInfo;
 
-            }
+        }
+
+        private class GitMessage {
+            public string Message {get; set;}
+        }
     }
 }
