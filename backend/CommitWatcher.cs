@@ -30,20 +30,22 @@ namespace Azureish
             var commitMessage = data.head_commit.message;
             var repository = data.repository.full_name;
 
-            string responseMessage = $"{commitId} - {author} - {commitMessage}";            
+            string responseMessage = $"{commitId} - {author} - {commitMessage}";          
+
+            GitMessage gitMessage = new GitMessage { 
+                                        Message = responseMessage,
+                                        Repository = repository 
+                                    };  
 
             await signalRMessages.AddAsync(
                 new SignalRMessage
                 {
                     Target = "gitMessage",
-                    Arguments = new[] { new GitMessage { 
-                        Message = responseMessage,
-                        Repository = repository 
-                    } }
+                    Arguments = new[] { gitMessage }
                 }
             );
 
-            return new OkObjectResult(responseMessage);
+            return new OkObjectResult(JsonConvert.SerializeObject(gitMessage));
         }
         
         [FunctionName("BeginNegotiate")]
