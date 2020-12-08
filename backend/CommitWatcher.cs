@@ -28,7 +28,7 @@ namespace Azureish
             var commitId = data.head_commit.id.ToString().Substring(0, 8);
             var author = data.head_commit.author.username;
             var commitMessage = data.head_commit.message;
-            var repository = data.repository.name;
+            var repository = data.repository.full_name;
 
             string responseMessage = $"{commitId} - {author} - {commitMessage}";            
 
