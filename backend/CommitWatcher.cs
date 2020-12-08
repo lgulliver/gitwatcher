@@ -41,9 +41,7 @@ namespace Azureish
 
             return new OkObjectResult(responseMessage);
         }
-
-
-        //DON'T MAKE THIS ANONYMOUS!!!!!!!!!!!
+        
         [FunctionName("BeginNegotiate")]
         public static SignalRConnectionInfo GetSignalRInfo(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest request,
