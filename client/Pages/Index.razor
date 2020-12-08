@@ -2,19 +2,20 @@
 
 @using Microsoft.AspNetCore.SignalR.Client
 
+@inject Microsoft.Extensions.Configuration.IConfiguration config
+
 <h1>@commitMessage</h1>
 
 
 
 @code { 
-    private HubConnection hubConnection;
-    private readonly string functionAppBaseUri = "http://localhost:7071/api/";
+    private HubConnection hubConnection;    
 
     private string commitMessage = string.Empty;
 
     protected override async Task OnInitializedAsync() 
     {
-        hubConnection = new HubConnectionBuilder().WithUrl(functionAppBaseUri).Build();
+        hubConnection = new HubConnectionBuilder().WithUrl(config["ApiBaseUrl"]).Build();
 
         hubConnection.On<GitMessage>("gitMessage", (gitMessage) =>
         {

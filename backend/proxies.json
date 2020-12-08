@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json.schemastore.org/proxies",
+    "proxies": {
+        "signalrNegotiate": {
+            "matchCondition": {
+                "route": "/api/negotiate",
+                "methods": [
+                    "POST"
+                ]
+            },
+            "backendUri": "%API_BASE_URL%/api/negotiate",
+            "requestOverrides": {
+                "backend.request.headers.x-functions-key": "%NEGOTIATE_FUNCTION_KEY%"
+            }
+        },
+        "commitWatcher": {
+            "matchCondition": {
+                "route": "/api/CommitWatcher",
+                "methods": [
+                    "POST"
+                ]
+            },
+            "backendUri": "%API_BASE_URL%/api/CommitWatcher",
+            "requestOverrides": {
+                "backend.request.headers.x-functions-key": "%COMMITWATCHER_FUNCTION_KEY%"
+            }
+        }
+    }
+}
